@@ -10,6 +10,8 @@ This means you can make your horizontal wheel behave differently for different
 applications: make it switch tabs when your browser is focused, but control the
 volume when your music player is active.
 
+Note: MagicWand currently only works on Linux with evdev and Xorg!
+
 ## Installation
 
 Make sure you have a working Go environment (Go 1.7 or higher is required).

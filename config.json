@@ -1,0 +1,68 @@
+{
+  "devices": [
+    {
+      "name": "Logitech MX Master"
+    },
+    {
+      "dev": "/dev/input/event6"
+    }
+  ],
+  "rules": [
+    {
+      "application": "Firefox",
+      "hwheel": 1,
+      "action": {
+        "keycode": "42-29-15",
+        "dbus": {}
+      }
+    },
+    {
+      "application": "Firefox",
+      "hwheel": -1,
+      "action": {
+        "keycode": "29-15",
+        "dbus": {}
+      }
+    },
+    {
+      "keycode": "56",
+      "hwheel": 1,
+      "action": {
+        "exec": "pactl set-sink-volume 0 -5%",
+        "dbus": {}
+      }
+    },
+    {
+      "keycode": "56",
+      "hwheel": -1,
+      "action": {
+        "exec": "pactl set-sink-volume 0 +5%",
+        "dbus": {}
+      }
+    },
+    {
+      "application": "!Firefox",
+      "keycode": "275",
+      "hwheel": 0,
+      "action": {
+        "dbus": {
+          "object": "org.kde.KWin",
+          "path": "/KWin",
+          "method": "org.kde.KWin.previousDesktop"
+        }
+      }
+    },
+    {
+      "application": "!Firefox",
+      "keycode": "276",
+      "hwheel": 0,
+      "action": {
+        "dbus": {
+          "object": "org.kde.KWin",
+          "path": "/KWin",
+          "method": "org.kde.KWin.nextDesktop"
+        }
+      }
+    }
+  ]
+}

@@ -31,7 +31,7 @@ their name or directly specify an input device file. For example:
       "name": "MX Master"
     },
     {
-      "dev": "/dev/input/event4"
+      "dev": "/dev/input/event6"
     }
   ]
 ```
@@ -39,7 +39,7 @@ their name or directly specify an input device file. For example:
 This will match two devices and makes MagicWand react to input events from:
 
 1.  Any device with the string "MX Master" in its name
-2.  The device `/dev/input/event4`
+2.  The device `/dev/input/event6`
 
 Next tell MagicWand which events to react upon:
 

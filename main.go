@@ -125,15 +125,27 @@ func mouseWheelEvent(ev *evdev.InputEvent, activeWindow Window) {
 	rel := evdev.RelEvent{}
 	rel.New(ev)
 
+	if ev.Code != evdev.REL_HWHEEL && ev.Code != evdev.REL_DIAL {
+		return
+	}
+
+	if time.Since(threshold) < time.Millisecond*time.Duration(*timeout) {
+		dLog("Discarding wheel event below threshold")
+		return
+	}
+	threshold = time.Now()
+
 	switch ev.Code {
 	case evdev.REL_HWHEEL:
-		if time.Since(threshold) < time.Millisecond*time.Duration(*timeout) {
-			dLog("Discarding wheel event below threshold")
+		rr := config.Rules.FilterByDial(0).FilterByHWheel(ev.Value).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+		if len(rr) == 0 {
 			return
 		}
-		threshold = time.Now()
 
-		rr := config.Rules.FilterByHWheel(ev.Value).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+		executeAction(rr[0].Action)
+
+	case evdev.REL_DIAL:
+		rr := config.Rules.FilterByDial(ev.Value).FilterByHWheel(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
 		if len(rr) == 0 {
 			return
 		}
@@ -155,7 +167,7 @@ func keyEvent(ev *evdev.InputEvent, activeWindow Window) {
 		return
 	}
 
-	rr := config.Rules.FilterByHWheel(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+	rr := config.Rules.FilterByHWheel(0).FilterByDial(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
 	delete(pressed, ev.Code)
 
 	if len(rr) == 0 {

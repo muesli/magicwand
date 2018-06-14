@@ -25,6 +25,7 @@ type Rule struct {
 	Application string `json:"application,omitempty"`
 	Keycode     string `json:"keycode,omitempty"`
 	HWheel      int32  `json:"hwheel"`
+	Dial        int32  `json:"dial"`
 	Action      Action `json:"action"`
 }
 type Rules []Rule
@@ -82,6 +83,17 @@ func (r Rules) FilterByHWheel(wheel int32) Rules {
 	var res Rules
 	for _, v := range r {
 		if v.HWheel == 0 || v.HWheel == wheel {
+			res = append(res, v)
+		}
+	}
+
+	return res
+}
+
+func (r Rules) FilterByDial(dial int32) Rules {
+	var res Rules
+	for _, v := range r {
+		if v.Dial == 0 || v.Dial == dial {
 			res = append(res, v)
 		}
 	}

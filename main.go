@@ -25,7 +25,6 @@ var (
 	threshold time.Time
 
 	pressed = make(map[uint16]struct{})
-	eds     []*evdev.InputDevice
 
 	debug   = flag.Bool("debug", true, "enables debug output")
 	timeout = flag.Uint("threshold", 130, "threshold in ms between wheel events")
@@ -200,32 +199,34 @@ func handleEvent(ev *evdev.InputEvent, win Window) {
 }
 
 func subscribeToDevice(dev Device, keychan chan *evdev.InputEvent) {
-	var err error
-	df := dev.Dev
-	if df == "" {
-		df, err = findDevice(dev.Name)
-		if err != nil {
-			log.Fatalf("Could not find device for %s", dev.Name)
-		}
-	}
-
-	ed, err := evdev.Open(df)
-	if err != nil {
-		panic(err)
-	}
-	dLog(ed.String())
-	eds = append(eds, ed)
-
-	go func(d *evdev.InputDevice) {
+	go func(dev Device) {
 		for {
-			ev, eerr := d.ReadOne()
-			if eerr != nil {
-				panic(eerr)
+			var err error
+			df := dev.Dev
+			if df == "" {
+				df, err = findDevice(dev.Name)
+				if err != nil {
+					log.Fatalf("Could not find device for %s", dev.Name)
+				}
 			}
 
-			keychan <- ev
+			ed, err := evdev.Open(df)
+			if err != nil {
+				panic(err)
+			}
+			dLog(ed.String())
+
+			for {
+				ev, eerr := ed.ReadOne()
+				if eerr != nil {
+					log.Printf("Error reading from device: %v", err)
+					break
+				}
+
+				keychan <- ev
+			}
 		}
-	}(ed)
+	}(dev)
 }
 
 func main() {

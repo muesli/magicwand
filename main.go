@@ -26,8 +26,9 @@ var (
 
 	pressed = make(map[uint16]struct{})
 
-	debug   = flag.Bool("debug", true, "enables debug output")
-	timeout = flag.Uint("threshold", 130, "threshold in ms between wheel events")
+	configFile = flag.String("config", "config.json", "path to config file")
+	debug      = flag.Bool("debug", true, "enables debug output")
+	timeout    = flag.Uint("threshold", 130, "threshold in ms between wheel events")
 )
 
 // logs if debug is enabled
@@ -232,7 +233,7 @@ func subscribeToDevice(dev Device, keychan chan *evdev.InputEvent) {
 func main() {
 	var err error
 	flag.Parse()
-	config, err = LoadConfig("config.json")
+	config, err = LoadConfig(*configFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -289,7 +290,7 @@ func main() {
 
 	fmt.Println("Shutting down...")
 	if *debug {
-		err = config.Save("config.json")
+		err = config.Save(*configFile)
 		if err != nil {
 			log.Fatal(err)
 		}

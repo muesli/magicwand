@@ -1,0 +1,25 @@
+{
+  "devices": [
+    {
+      "name": "Griffin PowerMate"
+    }
+  ],
+  "rules": [
+    {
+      "hwheel": 0,
+      "dial": -1,
+      "action": {
+        "keycode": "114",
+        "dbus": {}
+      }
+    },
+    {
+      "hwheel": 0,
+      "dial": 1,
+      "action": {
+        "keycode": "115",
+        "dbus": {}
+      }
+    }
+  ]
+}

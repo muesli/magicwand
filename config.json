@@ -1,16 +1,15 @@
 {
-  "devices": [
-    {
-      "name": "MX Master"
+  "devices": [{
+      "name": "Name of Device"
     },
     {
-      "dev": "/dev/input/event6"
+      "dev": "/dev/input/eventX"
     }
   ],
-  "rules": [
-    {
+  "rules": [{
       "application": "Firefox",
       "hwheel": 1,
+      "dial": 0,
       "action": {
         "keycode": "42-29-15",
         "dbus": {}
@@ -19,24 +18,25 @@
     {
       "application": "Firefox",
       "hwheel": -1,
+      "dial": 0,
       "action": {
         "keycode": "29-15",
         "dbus": {}
       }
     },
     {
-      "keycode": "56",
-      "hwheel": 1,
+      "hwheel": 0,
+      "dial": -1,
       "action": {
-        "exec": "pactl set-sink-volume 0 -5%",
+        "keycode": "114",
         "dbus": {}
       }
     },
     {
-      "keycode": "56",
-      "hwheel": -1,
+      "hwheel": 0,
+      "dial": 1,
       "action": {
-        "exec": "pactl set-sink-volume 0 +5%",
+        "keycode": "115",
         "dbus": {}
       }
     },
@@ -44,6 +44,7 @@
       "application": "!Firefox",
       "keycode": "275",
       "hwheel": 0,
+      "dial": 0,
       "action": {
         "dbus": {
           "object": "org.kde.KWin",
@@ -56,6 +57,7 @@
       "application": "!Firefox",
       "keycode": "276",
       "hwheel": 0,
+      "dial": 0,
       "action": {
         "dbus": {
           "object": "org.kde.KWin",

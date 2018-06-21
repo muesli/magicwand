@@ -105,6 +105,13 @@ Once you're done, start MagicWand:
 $ magicwand
 ```
 
+There are config examples for a few devices in the `configs` directory. You can
+try them out by starting `magicwand` with the `-config` argument:
+
+```
+$ magicwand -config ./configs/logitech_mxmaster.json
+```
+
 ## Development
 
 [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/muesli/magicwand)

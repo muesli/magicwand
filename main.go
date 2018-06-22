@@ -37,7 +37,7 @@ func dLog(a ...interface{}) {
 		return
 	}
 
-	log.Println(a)
+	log.Println(a...)
 }
 
 // prints all detected input devices

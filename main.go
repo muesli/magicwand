@@ -220,7 +220,8 @@ func subscribeToDevice(dev Device, keychan chan *evdev.InputEvent) {
 			for {
 				ev, eerr := ed.ReadOne()
 				if eerr != nil {
-					log.Printf("Error reading from device: %v", err)
+					log.Printf("Error reading from device: %v", eerr)
+					time.Sleep(1 * time.Second)
 					break
 				}
 

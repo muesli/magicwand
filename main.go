@@ -28,7 +28,7 @@ var (
 
 	configFile = flag.String("config", "config.json", "path to config file")
 	debug      = flag.Bool("debug", true, "enables debug output")
-	timeout    = flag.Uint("threshold", 130, "threshold in ms between wheel events")
+	timeout    = flag.Uint("threshold", 100, "threshold in ms between wheel events")
 )
 
 // logs if debug is enabled

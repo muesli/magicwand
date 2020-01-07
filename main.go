@@ -142,7 +142,12 @@ func mouseWheelEvent(ev Event, activeWindow Window) {
 
 	switch ev.Code {
 	case evdev.REL_HWHEEL:
-		rr := config.Rules.FilterByDevice(ev.Device).FilterByDial(0).FilterByHWheel(ev.Value).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+		rr := config.Rules.
+			FilterByDevice(ev.Device).
+			FilterByDial(0).
+			FilterByHWheel(ev.Value).
+			FilterByKeycodes(pressed).
+			FilterByApplication(activeWindow.Class)
 		if len(rr) == 0 {
 			return
 		}
@@ -150,7 +155,12 @@ func mouseWheelEvent(ev Event, activeWindow Window) {
 		executeAction(rr[0].Action)
 
 	case evdev.REL_DIAL:
-		rr := config.Rules.FilterByDevice(ev.Device).FilterByDial(ev.Value).FilterByHWheel(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+		rr := config.Rules.
+			FilterByDevice(ev.Device).
+			FilterByDial(ev.Value).
+			FilterByHWheel(0).
+			FilterByKeycodes(pressed).
+			FilterByApplication(activeWindow.Class)
 		if len(rr) == 0 {
 			return
 		}
@@ -172,7 +182,12 @@ func keyEvent(ev Event, activeWindow Window) {
 		return
 	}
 
-	rr := config.Rules.FilterByDevice(ev.Device).FilterByHWheel(0).FilterByDial(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+	rr := config.Rules.
+		FilterByDevice(ev.Device).
+		FilterByHWheel(0).
+		FilterByDial(0).
+		FilterByKeycodes(pressed).
+		FilterByApplication(activeWindow.Class)
 	delete(pressed, ev.Code)
 
 	if len(rr) == 0 {

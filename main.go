@@ -27,8 +27,8 @@ var (
 	pressed = make(map[uint16]struct{})
 
 	configFile = flag.String("config", "config.json", "path to config file")
-	debug      = flag.Bool("debug", true, "enables debug output")
-	timeout    = flag.Uint("threshold", 100, "threshold in ms between wheel events")
+	debug      = flag.Bool("debug", false, "enables debug output")
+	timeout    = flag.Uint("threshold", 200, "threshold in ms between wheel events")
 )
 
 // logs if debug is enabled

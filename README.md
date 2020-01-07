@@ -62,6 +62,23 @@ and you `scroll left` with the horizontal mouse wheel, emulate a keyboard stroke
 `Ctrl-Shift-Left` (keycodes 42, 29 and 15): this makes Firefox jump to the
 previous tab.
 
+If you have multiple devices emitting certain events, you can configure which
+device a rule applies to:
+
+```
+  "rules": [
+    {
+      "device": {
+        "name": "MX Master"
+      },
+      "hwheel": 1,
+      "action": {
+        ...
+      }
+    }
+  ]
+```
+
 Another example would be defining global shortcuts for certain mouse buttons:
 
 ```

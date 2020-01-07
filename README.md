@@ -129,6 +129,16 @@ try them out by starting `magicwand` with the `-config` argument:
 $ magicwand -config ./configs/logitech_mxmaster.json
 ```
 
+## Troubleshooting
+
+MagicWand uses `uinput` to emulate keyboard events. Make sure your user has the
+correct permissions to access `/dev/uinput`:
+
+```
+echo KERNEL==\"uinput\", GROUP=\"$USER\", MODE:=\"0660\" | sudo tee /etc/udev/rules.d/99-magicwand.rules
+sudo udevadm trigger
+```
+
 ## Development
 
 [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/muesli/magicwand)

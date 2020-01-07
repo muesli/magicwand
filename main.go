@@ -31,6 +31,11 @@ var (
 	timeout    = flag.Uint("threshold", 200, "threshold in ms between wheel events")
 )
 
+type Event struct {
+	*evdev.InputEvent
+	Device Device
+}
+
 // logs if debug is enabled
 func dLog(a ...interface{}) {
 	if !*debug {
@@ -121,9 +126,9 @@ func executeAction(a Action) {
 }
 
 // handles mouse wheel events
-func mouseWheelEvent(ev *evdev.InputEvent, activeWindow Window) {
+func mouseWheelEvent(ev Event, activeWindow Window) {
 	rel := evdev.RelEvent{}
-	rel.New(ev)
+	rel.New(ev.InputEvent)
 
 	if ev.Code != evdev.REL_HWHEEL && ev.Code != evdev.REL_DIAL {
 		return
@@ -137,7 +142,7 @@ func mouseWheelEvent(ev *evdev.InputEvent, activeWindow Window) {
 
 	switch ev.Code {
 	case evdev.REL_HWHEEL:
-		rr := config.Rules.FilterByDial(0).FilterByHWheel(ev.Value).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+		rr := config.Rules.FilterByDevice(ev.Device).FilterByDial(0).FilterByHWheel(ev.Value).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
 		if len(rr) == 0 {
 			return
 		}
@@ -145,7 +150,7 @@ func mouseWheelEvent(ev *evdev.InputEvent, activeWindow Window) {
 		executeAction(rr[0].Action)
 
 	case evdev.REL_DIAL:
-		rr := config.Rules.FilterByDial(ev.Value).FilterByHWheel(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+		rr := config.Rules.FilterByDevice(ev.Device).FilterByDial(ev.Value).FilterByHWheel(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
 		if len(rr) == 0 {
 			return
 		}
@@ -158,16 +163,16 @@ func mouseWheelEvent(ev *evdev.InputEvent, activeWindow Window) {
 }
 
 // handles key events
-func keyEvent(ev *evdev.InputEvent, activeWindow Window) {
+func keyEvent(ev Event, activeWindow Window) {
 	kev := evdev.KeyEvent{}
-	kev.New(ev)
+	kev.New(ev.InputEvent)
 
 	pressed[ev.Code] = struct{}{}
 	if kev.State != evdev.KeyUp {
 		return
 	}
 
-	rr := config.Rules.FilterByHWheel(0).FilterByDial(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
+	rr := config.Rules.FilterByDevice(ev.Device).FilterByHWheel(0).FilterByDial(0).FilterByKeycodes(pressed).FilterByApplication(activeWindow.Class)
 	delete(pressed, ev.Code)
 
 	if len(rr) == 0 {
@@ -177,7 +182,7 @@ func keyEvent(ev *evdev.InputEvent, activeWindow Window) {
 	executeAction(rr[0].Action)
 }
 
-func handleEvent(ev *evdev.InputEvent, win Window) {
+func handleEvent(ev Event, win Window) {
 	switch ev.Type {
 	case evdev.EV_KEY:
 		// dLog("Key event:", ev.String())
@@ -199,7 +204,7 @@ func handleEvent(ev *evdev.InputEvent, win Window) {
 	}
 }
 
-func subscribeToDevice(dev Device, keychan chan *evdev.InputEvent) {
+func subscribeToDevice(dev Device, keychan chan Event) {
 	go func(dev Device) {
 		for {
 			var err error
@@ -225,7 +230,10 @@ func subscribeToDevice(dev Device, keychan chan *evdev.InputEvent) {
 					break
 				}
 
-				keychan <- ev
+				keychan <- Event{
+					InputEvent: ev,
+					Device:     dev,
+				}
 			}
 		}
 	}(dev)
@@ -267,7 +275,7 @@ func main() {
 		panic(err)
 	}
 
-	keychan := make(chan *evdev.InputEvent)
+	keychan := make(chan Event)
 	for _, dev := range config.Devices {
 		subscribeToDevice(dev, keychan)
 	}

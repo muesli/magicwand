@@ -22,11 +22,12 @@ type Action struct {
 }
 
 type Rule struct {
-	Application string `json:"application,omitempty"`
-	Keycode     string `json:"keycode,omitempty"`
-	HWheel      int32  `json:"hwheel"`
-	Dial        int32  `json:"dial"`
-	Action      Action `json:"action"`
+	Device      *Device `json:"device,omitempty"`
+	Application string  `json:"application,omitempty"`
+	Keycode     string  `json:"keycode,omitempty"`
+	HWheel      int32   `json:"hwheel"`
+	Dial        int32   `json:"dial"`
+	Action      Action  `json:"action"`
 }
 type Rules []Rule
 
@@ -61,6 +62,19 @@ func (c Config) Save(filename string) error {
 		return err
 	}
 	return ioutil.WriteFile(filename, j, 0644)
+}
+
+func (r Rules) FilterByDevice(dev Device) Rules {
+	var res Rules
+	for _, v := range r {
+		if v.Device == nil ||
+			(len(dev.Name) > 0 && v.Device.Name == dev.Name) ||
+			(len(dev.Dev) > 0 && v.Device.Dev == dev.Dev) {
+			res = append(res, v)
+		}
+	}
+
+	return res
 }
 
 func (r Rules) FilterByApplication(name string) Rules {

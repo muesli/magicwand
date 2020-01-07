@@ -251,7 +251,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer dbusConn.Close()
 
 	x := Connect(os.Getenv("DISPLAY"))
 	defer x.Close()

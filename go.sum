@@ -1,0 +1,10 @@
+github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802 h1:1BDTz0u9nC3//pOCMdNH+CiXJVYJh5UQNCOBG7jbELc=
+github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/bendahl/uinput v1.0.1 h1:4sRXjFXRupqkGFAdQ3rvpHXUF6c7eP0zc851/kblUcg=
+github.com/bendahl/uinput v1.0.1/go.mod h1:2JMdx4rrhf/FU24AarB52ZXCaFqJDxYYlWq+uV6bvSE=
+github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
+github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/godbus/dbus v4.1.0+incompatible h1:WqqLRTsQic3apZUK9qC5sGNfXthmPXzUZ7nQPrNITa4=
+github.com/godbus/dbus v4.1.0+incompatible/go.mod h1:/YcGZj5zSblfDWMMoOzV4fas9FZnQYTkDnsGvmh2Grw=
+github.com/gvalkov/golang-evdev v0.0.0-20180516222720-b6f418b1fe5a h1:PpqPstphGuFEdiuje4K8NmWN+Qzvu15NN/oFa1w/lGM=
+github.com/gvalkov/golang-evdev v0.0.0-20180516222720-b6f418b1fe5a/go.mod h1:SAzVFKCRezozJTGavF3GX8MBUruETCqzivVLYiywouA=

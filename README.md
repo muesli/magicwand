@@ -1,5 +1,9 @@
 # MagicWand
 
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/muesli/magicwand)
+[![Build Status](https://travis-ci.org/muesli/magicwand.svg?branch=master)](https://travis-ci.org/muesli/magicwand)
+[![Go ReportCard](http://goreportcard.com/badge/muesli/magicwand)](http://goreportcard.com/report/muesli/magicwand)
+
 MagicWand makes your input devices context sensitive!
 
 It lets you define application-specific keyboard shortcuts and mouse events to
@@ -138,9 +142,3 @@ correct permissions to access `/dev/uinput`:
 echo KERNEL==\"uinput\", GROUP=\"$USER\", MODE:=\"0660\" | sudo tee /etc/udev/rules.d/99-magicwand.rules
 sudo udevadm trigger
 ```
-
-## Development
-
-[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/muesli/magicwand)
-[![Build Status](https://travis-ci.org/muesli/magicwand.svg?branch=master)](https://travis-ci.org/muesli/magicwand)
-[![Go ReportCard](http://goreportcard.com/badge/muesli/magicwand)](http://goreportcard.com/report/muesli/magicwand)

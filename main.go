@@ -108,6 +108,10 @@ func executeCommand(cmd string) {
 	if err := c.Start(); err != nil {
 		panic(err)
 	}
+	err := c.Wait()
+	if err != nil {
+		log.Printf("command failed: %s", err)
+	}
 }
 
 // executes an action
